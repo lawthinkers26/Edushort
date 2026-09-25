@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import rateLimit from 'express-rate-limit';
+import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
 import { getPlan, postCancel, postSubscription, postVerify } from '../controllers/paymentController';
 import { authenticate } from '../middleware/authenticate';
 
@@ -10,7 +10,8 @@ const checkoutLimiter = rateLimit({
   limit: 20,
   standardHeaders: 'draft-8',
   legacyHeaders: false,
-  keyGenerator: (req) => req.user?.uid ?? req.ip ?? 'anonymous',
+  // Per signed-in user; IPv6 clients are grouped by /56 subnet so they can't rotate addresses.
+  keyGenerator: (req) => req.user?.uid ?? ipKeyGenerator(req.ip ?? '0.0.0.0'),
   message: { error: { code: 'RATE_LIMITED', message: 'Too many payment attempts, please try again later.' } },
 });
 

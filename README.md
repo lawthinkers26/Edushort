@@ -14,6 +14,8 @@ EduShorts is a short-form educational video platform with vertical, swipeable re
 └──────────────────────┘                              └──────────────────────────┘
 ```
 
+> **Going live?** Follow the step-by-step guide in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+
 | Folder | Stack | What it contains |
 | --- | --- | --- |
 | [`supabase/`](supabase/migrations/20260925000000_init_schema.sql) | PostgreSQL | Tables, triggers, atomic RPC functions, RLS lockdown |
